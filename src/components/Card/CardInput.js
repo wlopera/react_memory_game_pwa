@@ -1,35 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 
-const CardInput = (props) => {
-  const [card, setCard] = useState({ name: "back-1", position: 0, status: 0 });
+const CardInput = ({ onChange, id, name, position, status, disabled }) => {
+  const [card, setCard] = useState(null);
   const width = 180;
   const height = 180;
 
+  useEffect(() => {
+    if (status === 0) {
+      setCard({
+        id: 0,
+        name: "back",
+        position: 0,
+        status: 0,
+      });
+    } else {
+      setCard({
+        id: id,
+        name: name,
+        position: position,
+        status: status,
+      });
+    }
+  }, [id, name, position, status]);
+
   const handleOnClick = () => {
-    setCard((current) => {
-      if (current.status === 0) {
-        if (current.name === "back") {
-          return { name: props.name, position: props.position, status: 0 };
+    if (card.status === 0) {
+      let newCard = null;
+      if (card.status === 0) {
+        if (card.name === "back") {
+          newCard = {
+            id: id,
+            name: name,
+            position: position,
+            status: status,
+          };
+          return onChange(newCard);
         }
-        return {
-          ...current,
-          name: "back-1",
+        newCard = {
+          ...card,
+          name: "back",
         };
+        return onChange(newCard);
       }
-      return current;
-    });
+      return onChange(card);
+    }
   };
 
-  return (
+  return card ? (
     <Card
+      id={id}
       name={card.name}
       position={card.position}
       width={width}
       height={height}
       click={handleOnClick}
+      disabled={disabled}
     />
-  );
+  ) : null;
 };
 
 export default CardInput;

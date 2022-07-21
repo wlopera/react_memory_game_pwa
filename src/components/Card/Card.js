@@ -1,9 +1,10 @@
 import React from "react";
 
-const Card = ({ name, width, height, click }) => {
+const Card = ({ id, name, width, height, click, disabled }) => {
   return (
-    <div>
+    <div style={disabled ? { pointerEvents: "none" } : null}>
       <img
+        id={id}
         className=""
         src={`/cards/${name}.svg`}
         alt="logo"
