@@ -3,8 +3,8 @@ import Card from "./Card";
 
 const CardInput = ({ onChange, id, name, position, status, disabled }) => {
   const [card, setCard] = useState(null);
-  const width = 180;
-  const height = 180;
+  const width = 100;
+  const height = 100;
 
   useEffect(() => {
     if (status === 0) {
@@ -56,6 +56,7 @@ const CardInput = ({ onChange, id, name, position, status, disabled }) => {
       height={height}
       click={handleOnClick}
       disabled={disabled}
+      status={status}
     />
   ) : null;
 };

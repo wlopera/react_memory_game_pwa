@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="186.031 258.565 166.6 242.2" width="166.6" height="242.2" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient-3">
+      <stop offset="0" style="stop-color: #00416a;"/>
+      <stop offset="1" style="stop-color: #e4e5e6;"/>
+    </linearGradient>
+  </defs>
+  <g transform="matrix(0.704738, 0, 0, 6.727777, 186.030688, 258.565189)">
+    <rect x="0" y="0" width="236.40000915527344" height="36" style="fill: url(#gradient-3);"/>
+  </g>
+</svg>
