@@ -49,20 +49,31 @@ const Board = () => {
   };
 
   const handleAmountCards = (event) => {
+    setAmountCards(parseInt(event.target.value));
     setCardTemp(null);
     setDisabled(false);
     setAttemps(0);
-    setAmountCards(parseInt(event.target.value));
   };
+
+  const restart = () => {
+    setCardTemp(null);
+    setDisabled(false);
+    setAttemps(0);
+    setCards((current) =>
+      current.map((card) => ({ ...card, status: CARD_DOWN }))
+    );
+  };
+
   return (
-    <div className="container pb-2 " style={{ border: "2px solid black" }}>
-      <div className="align-items-stretch bg-primary text-white">
-        <span className="fs-2 ms-4">Juego de Memoria</span>
-        <span className="ps-4 ">Cantidad de cartas</span>
+    <div className="container pb-2 " style={{ border: "1px solid black" }}>
+      <div className="d-flex justify-content-center align-items-center bg-primary text-white">
+        <span className="fs-4 ms-2">Memoria</span>
+        <span className="ps-2 ">Cartas</span>
         <select
-          className="ms-4"
+          className="ms-2"
           onChange={handleAmountCards}
           value={amountCards}
+          style={{ fontSize: "10px" }}
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -70,7 +81,20 @@ const Board = () => {
             </option>
           ))}
         </select>
-        <span className="ms-4">Número de intentos: {attemps}</span>
+        <span className="ms-2">Intentos: {attemps}</span>
+        <button
+          className="ms-2"
+          style={{
+            padding: "1px",
+            fontSize: "10px",
+            backgroundColor: "#81EC8E",
+            border: "none",
+            borderRadius: "6px",
+          }}
+          onClick={restart}
+        >
+          Reiniciar
+        </button>
       </div>
       <div className="row">
         {cards.map((data) => (
