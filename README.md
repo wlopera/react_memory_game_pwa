@@ -1,5 +1,5 @@
 # react_memory_game_pwa
-Juego de Poker en Reacr APP con PWA
+Juego de Memoria en React APP con PWA
 
 ## Salida
 ![Captura1](https://user-images.githubusercontent.com/7141537/180532338-d9cfd8ba-4814-4993-8a7d-f2511b2be294.PNG)
