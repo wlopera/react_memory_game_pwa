@@ -1,49 +1,112 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CardInput from "../Card/CardInput";
 import data from "../../store/data.json";
-import { getRandom } from "../../util/Utilities";
+import { getCards, updateCard } from "../../util/Utilities";
+import {
+  CARD_UP,
+  CARD_DOWN,
+  CARD_BACKGROUND,
+  options,
+} from "../../util/Constants";
 
 const Board = () => {
-  let cardList = [];
+  const [amountCards, setAmountCards] = useState(16);
+  const [cards, setCards] = useState([]);
+  const [cardTemp, setCardTemp] = useState(null);
+  const [disabled, setDisabled] = useState(false);
+  const [attemps, setAttemps] = useState(0);
 
-  const getData = () => {
-    while (cardList.length < 16) {
-      const value = getRandom(1, 52);
-      const valueExist = cardList.filter((item) => item.id === value)[0];
-      if (!valueExist) {
-        const newData = data.filter((item) => item.id === value)[0];
-        cardList.push({
-          id: newData.id,
-          name: newData.label,
-          position: cardList.length + 1,
-        });
-        cardList.push({
-          id: newData.id,
-          name: newData.label,
-          position: cardList.length + 1,
-        });
+  useEffect(() => {
+    setCards(getCards(data, amountCards));
+  }, [setCards, amountCards]);
+
+  const handleSetCard = (data) => {
+    if (!cardTemp) {
+      setCardTemp({ ...data, status: CARD_UP });
+      setCards((cards) =>
+        updateCard(cards, "position", data.position, CARD_UP)
+      );
+    } else {
+      setCards((cards) =>
+        updateCard(cards, "position", data.position, CARD_UP)
+      );
+      setDisabled(true);
+    }
+    setTimeout(() => {
+      if (cardTemp && data) {
+        if (cardTemp.id === data.id) {
+          setCards((cards) =>
+            updateCard(cards, "status", CARD_UP, CARD_BACKGROUND)
+          );
+        } else {
+          setCards((cards) => updateCard(cards, "status", CARD_UP, CARD_DOWN));
+        }
+        setAttemps((current) => current + 1);
+        setCardTemp(null);
+        setDisabled(false);
       }
-    }
-
-    //Desordenar orden incial
-    for (let index = 0; index < cardList.length / 2; index++) {
-      const posx = getRandom(1, 15);
-      const posy = getRandom(1, 15);
-
-      var element = cardList[posx];
-      cardList.splice(posx, 1);
-      cardList.splice(posy, 0, element);
-    }
+    }, 750);
   };
 
-  getData();
+  const handleAmountCards = (event) => {
+    setAmountCards(parseInt(event.target.value));
+    setCardTemp(null);
+    setDisabled(false);
+    setAttemps(0);
+  };
+
+  const restart = () => {
+    setCardTemp(null);
+    setDisabled(false);
+    setAttemps(0);
+    setCards((current) =>
+      current.map((card) => ({ ...card, status: CARD_DOWN }))
+    );
+  };
 
   return (
-    <div className="container">
+    <div className="container pb-2 " style={{ border: "1px solid black" }}>
+      <div className="d-flex justify-content-center align-items-center bg-primary text-white">
+        <span className="fs-4 ms-2">Memoria</span>
+        <span className="ps-2 ">Cartas</span>
+        <select
+          className="ms-2"
+          onChange={handleAmountCards}
+          value={amountCards}
+          style={{ fontSize: "10px" }}
+        >
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <span className="ms-2">Intentos: {attemps}</span>
+        <button
+          className="ms-2"
+          style={{
+            padding: "1px",
+            fontSize: "10px",
+            backgroundColor: "#81EC8E",
+            border: "none",
+            borderRadius: "6px",
+          }}
+          onClick={restart}
+        >
+          Reiniciar
+        </button>
+      </div>
       <div className="row">
-        {cardList.map((data) => (
+        {cards.map((data) => (
           <div className="col-3 pe-1 pt-2" key={data.position}>
-            <CardInput name={data.name} position={data.position} />
+            <CardInput
+              id={data.id}
+              name={data.name}
+              position={data.position}
+              status={data.status}
+              onChange={handleSetCard}
+              disabled={disabled}
+            />
           </div>
         ))}
       </div>
@@ -52,7 +115,3 @@ const Board = () => {
 };
 
 export default Board;
-
-//  const handleGo = () => {
-//    setCard((current) => ({ ...current, status: 1 }));
-//  };

@@ -1,35 +1,83 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import { CARD_DOWN, CARD_NAME_BACK } from "../../util/Constants";
 
-const CardInput = (props) => {
-  const [card, setCard] = useState({ name: "back-1", position: 0, status: 0 });
-  const width = 180;
-  const height = 180;
+const CardInput = ({
+  onChange,
+  id,
+  name,
+  position,
+  status,
+  disabled,
+  amountCards,
+}) => {
+  const [card, setCard] = useState(null);
+  const [width, setWidth] = useState(180);
+  const [height, setHeight] = useState(180);
+
+  useEffect(() => {
+    const setDimensions = () => {
+      const { innerWidth, innerHeight } = window;
+      setWidth((innerWidth * 80) / 400);
+      setHeight((innerHeight * 80) / 400);
+    };
+
+    setDimensions();
+  }, [width, height]);
+
+  useEffect(() => {
+    if (status === CARD_DOWN) {
+      setCard({
+        id: 0,
+        name: CARD_NAME_BACK,
+        position: 0,
+        status: CARD_DOWN,
+      });
+    } else {
+      setCard({
+        id: id,
+        name: name,
+        position: position,
+        status: status,
+      });
+    }
+  }, [id, name, position, status]);
 
   const handleOnClick = () => {
-    setCard((current) => {
-      if (current.status === 0) {
-        if (current.name === "back") {
-          return { name: props.name, position: props.position, status: 0 };
+    if (card.status === CARD_DOWN) {
+      let newCard = null;
+      if (card.status === CARD_DOWN) {
+        if (card.name === CARD_NAME_BACK) {
+          newCard = {
+            id: id,
+            name: name,
+            position: position,
+            status: status,
+          };
+          return onChange(newCard);
         }
-        return {
-          ...current,
-          name: "back-1",
+        newCard = {
+          ...card,
+          name: CARD_NAME_BACK,
         };
+        return onChange(newCard);
       }
-      return current;
-    });
+      return onChange(card);
+    }
   };
 
-  return (
+  return card ? (
     <Card
+      id={id}
       name={card.name}
       position={card.position}
       width={width}
       height={height}
       click={handleOnClick}
+      disabled={disabled}
+      status={status}
     />
-  );
+  ) : null;
 };
 
 export default CardInput;
