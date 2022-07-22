@@ -7,10 +7,11 @@ import {
   CARD_DOWN,
   CARD_BACKGROUND,
   options,
+  AMOUNT_CARDS_DEFAULT,
 } from "../../util/Constants";
 
 const Board = () => {
-  const [amountCards, setAmountCards] = useState(16);
+  const [amountCards, setAmountCards] = useState(AMOUNT_CARDS_DEFAULT);
   const [cards, setCards] = useState([]);
   const [cardTemp, setCardTemp] = useState(null);
   const [disabled, setDisabled] = useState(false);
@@ -59,9 +60,7 @@ const Board = () => {
     setCardTemp(null);
     setDisabled(false);
     setAttemps(0);
-    setCards((current) =>
-      current.map((card) => ({ ...card, status: CARD_DOWN }))
-    );
+    setCards(getCards(data, amountCards));
   };
 
   return (
@@ -73,7 +72,7 @@ const Board = () => {
           className="ms-2"
           onChange={handleAmountCards}
           value={amountCards}
-          style={{ fontSize: "10px" }}
+          style={{ fontSize: "15px" }}
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -86,7 +85,7 @@ const Board = () => {
           className="ms-2"
           style={{
             padding: "1px",
-            fontSize: "10px",
+            fontSize: "15px",
             backgroundColor: "#81EC8E",
             border: "none",
             borderRadius: "6px",

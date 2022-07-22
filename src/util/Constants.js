@@ -6,6 +6,7 @@ export const CARD_BACKGROUND = "background";
 export const POINTER_EVENT_NONE = "none";
 export const CARD_NAME_BACK = "back";
 export const CARD_NAME_BACKGROUND = "fondo5";
+export const AMOUNT_CARDS_DEFAULT = 16;
 
 export const options = [
   {
