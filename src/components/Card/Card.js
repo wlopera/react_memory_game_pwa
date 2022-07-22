@@ -1,9 +1,25 @@
 import React from "react";
+import {
+  CARD_BACKGROUND,
+  POINTER_EVENT_NONE,
+  CARD_NAME_BACKGROUND,
+} from "../../util/Constants";
 
 const Card = ({ id, name, width, height, click, disabled, status }) => {
   const context =
-    status !== 2 ? (
-      <div style={disabled ? { pointerEvents: "none" } : null}>
+    status === CARD_BACKGROUND ? (
+      <div style={disabled ? { pointerEvents: POINTER_EVENT_NONE } : null}>
+        <img
+          id={id}
+          className=""
+          src={`/cards/${CARD_NAME_BACKGROUND}.svg`}
+          alt="logo1"
+          width={width}
+          height={height}
+        />
+      </div>
+    ) : (
+      <div style={disabled ? { pointerEvents: POINTER_EVENT_NONE } : null}>
         <img
           id={id}
           className=""
@@ -12,17 +28,6 @@ const Card = ({ id, name, width, height, click, disabled, status }) => {
           width={width}
           height={height}
           onClick={click}
-        />
-      </div>
-    ) : (
-      <div style={disabled ? { pointerEvents: "none" } : null}>
-        <img
-          id={id}
-          className=""
-          src={`/cards/fondo5.svg`}
-          alt="logo1"
-          width={width}
-          height={height}
         />
       </div>
     );

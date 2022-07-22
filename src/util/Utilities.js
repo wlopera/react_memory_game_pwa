@@ -1,10 +1,12 @@
+import { CARD_DOWN } from "../util/Constants";
+
 export const getRandom = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-export const getCards = (data) => {
+export const getCards = (data, amountCards) => {
   let cardList = [];
-  while (cardList.length < 16) {
+  while (cardList.length < amountCards) {
     const value = getRandom(1, 52);
     const valueExist = cardList.filter((item) => item.id === value)[0];
     if (!valueExist) {
@@ -14,22 +16,22 @@ export const getCards = (data) => {
           id: newData.id,
           name: newData.label,
           position: cardList.length + 1,
-          status: 0,
+          status: CARD_DOWN,
         });
         cardList.push({
           id: newData.id,
           name: newData.label,
           position: cardList.length + 1,
-          status: 0,
+          status: CARD_DOWN,
         });
       }
     }
   }
 
   // Desordenar orden incial
-  for (let index = 0; index < cardList.length / 2; index++) {
-    const posx = getRandom(1, 15);
-    const posy = getRandom(1, 15);
+  for (let index = 0; index < amountCards * 5; index++) {
+    const posx = getRandom(1, amountCards - 1);
+    const posy = getRandom(1, amountCards - 1);
 
     var element = cardList[posx];
     cardList.splice(posx, 1);

@@ -1,18 +1,37 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import { CARD_DOWN, CARD_NAME_BACK } from "../../util/Constants";
 
-const CardInput = ({ onChange, id, name, position, status, disabled }) => {
+const CardInput = ({
+  onChange,
+  id,
+  name,
+  position,
+  status,
+  disabled,
+  amountCards,
+}) => {
   const [card, setCard] = useState(null);
-  const width = 100;
-  const height = 100;
+  const [width, setWidth] = useState(180);
+  const [height, setHeight] = useState(180);
 
   useEffect(() => {
-    if (status === 0) {
+    const setDimensions = () => {
+      const { innerWidth, innerHeight } = window;
+      setWidth((innerWidth * 80) / 400);
+      setHeight((innerHeight * 80) / 400);
+    };
+
+    setDimensions();
+  }, [width, height]);
+
+  useEffect(() => {
+    if (status === CARD_DOWN) {
       setCard({
         id: 0,
-        name: "back",
+        name: CARD_NAME_BACK,
         position: 0,
-        status: 0,
+        status: CARD_DOWN,
       });
     } else {
       setCard({
@@ -25,10 +44,10 @@ const CardInput = ({ onChange, id, name, position, status, disabled }) => {
   }, [id, name, position, status]);
 
   const handleOnClick = () => {
-    if (card.status === 0) {
+    if (card.status === CARD_DOWN) {
       let newCard = null;
-      if (card.status === 0) {
-        if (card.name === "back") {
+      if (card.status === CARD_DOWN) {
+        if (card.name === CARD_NAME_BACK) {
           newCard = {
             id: id,
             name: name,
@@ -39,7 +58,7 @@ const CardInput = ({ onChange, id, name, position, status, disabled }) => {
         }
         newCard = {
           ...card,
-          name: "back",
+          name: CARD_NAME_BACK,
         };
         return onChange(newCard);
       }
