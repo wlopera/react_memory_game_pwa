@@ -8,6 +8,7 @@ import {
   CARD_BACKGROUND,
   options,
   AMOUNT_CARDS_DEFAULT,
+  TIME_WAIT,
 } from "../../util/Constants";
 
 const Board = () => {
@@ -46,7 +47,7 @@ const Board = () => {
         setCardTemp(null);
         setDisabled(false);
       }
-    }, 750);
+    }, TIME_WAIT);
   };
 
   const handleAmountCards = (event) => {
