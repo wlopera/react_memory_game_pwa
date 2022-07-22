@@ -11,7 +11,7 @@ const Card = ({ id, name, width, height, click, disabled, status }) => {
       <div style={disabled ? { pointerEvents: POINTER_EVENT_NONE } : null}>
         <img
           id={id}
-          className=""
+          className="img-fluid"
           src={`/cards/${CARD_NAME_BACKGROUND}.svg`}
           alt="logo1"
           width={width}
@@ -22,7 +22,7 @@ const Card = ({ id, name, width, height, click, disabled, status }) => {
       <div style={disabled ? { pointerEvents: POINTER_EVENT_NONE } : null}>
         <img
           id={id}
-          className=""
+          className="img-fluid"
           src={`/cards/${name}.svg`}
           alt="logo"
           width={width}

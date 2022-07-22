@@ -8,6 +8,8 @@ export const CARD_NAME_BACK = "back";
 export const CARD_NAME_BACKGROUND = "fondo5";
 export const AMOUNT_CARDS_DEFAULT = 16;
 export const TIME_WAIT = 1000;
+export const WIDTH_DEFAULT = 150;
+export const HEIGHT_DEFAULT = 150;
 
 export const options = [
   {

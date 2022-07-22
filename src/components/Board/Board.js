@@ -8,7 +8,6 @@ import {
   CARD_BACKGROUND,
   options,
   AMOUNT_CARDS_DEFAULT,
-  TIME_WAIT,
 } from "../../util/Constants";
 
 const Board = () => {
@@ -47,7 +46,7 @@ const Board = () => {
         setCardTemp(null);
         setDisabled(false);
       }
-    }, TIME_WAIT);
+    }, 750);
   };
 
   const handleAmountCards = (event) => {
@@ -98,7 +97,7 @@ const Board = () => {
       </div>
       <div className="row">
         {cards.map((data) => (
-          <div className="col-3 pe-1 pt-2" key={data.position}>
+          <div className="col-3 pe-2 pt-2" key={data.position}>
             <CardInput
               id={data.id}
               name={data.name}

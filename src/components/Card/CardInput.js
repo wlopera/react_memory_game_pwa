@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
-import { CARD_DOWN, CARD_NAME_BACK } from "../../util/Constants";
+import {
+  CARD_DOWN,
+  CARD_NAME_BACK,
+  WIDTH_DEFAULT,
+  HEIGHT_DEFAULT,
+} from "../../util/Constants";
 
-const CardInput = ({
-  onChange,
-  id,
-  name,
-  position,
-  status,
-  disabled,
-  amountCards,
-}) => {
+const CardInput = ({ onChange, id, name, position, status, disabled }) => {
   const [card, setCard] = useState(null);
-  const [width, setWidth] = useState(180);
-  const [height, setHeight] = useState(180);
+  const [width, setWidth] = useState(WIDTH_DEFAULT);
+  const [height, setHeight] = useState(HEIGHT_DEFAULT);
 
   useEffect(() => {
     const setDimensions = () => {
