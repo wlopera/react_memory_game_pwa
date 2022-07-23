@@ -7,7 +7,7 @@ export const getRandom = (min, max) => {
 export const getCards = (data, amountCards) => {
   let cardList = [];
   while (cardList.length < amountCards) {
-    const value = getRandom(1, 52);
+    const value = getRandom(33, 52);
     const valueExist = cardList.filter((item) => item.id === value)[0];
     if (!valueExist) {
       const newData = data.filter((item) => item.id === value)[0];
