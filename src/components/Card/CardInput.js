@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import { CARD_DOWN, CARD_NAME_BACK } from "../../util/Constants";
 
-const CardInput = ({ onChange, id, name, position, status }) => {
+const CardInput = ({ onChange, id, name, position, status, disabled }) => {
   const [card, setCard] = useState(null);
 
   useEffect(() => {
@@ -24,6 +24,9 @@ const CardInput = ({ onChange, id, name, position, status }) => {
   }, [id, name, position, status]);
 
   const handleOnClick = () => {
+    if (disabled) {
+      return;
+    }
     if (card.status === CARD_DOWN) {
       let newCard = null;
       if (card.status === CARD_DOWN) {

@@ -4,9 +4,9 @@ export const CARD_DO_NOT_SHOW = "notShow";
 export const CARD_BLOCK = "block";
 export const CARD_BACKGROUND = "background";
 export const CARD_NAME_BACK = "back";
-export const CARD_NAME_BACKGROUND = "fondo5";
+export const CARD_NAME_BACKGROUND = "fondo0";
 export const AMOUNT_CARDS_DEFAULT = 16;
-export const TIME_WAIT = 5000;
+export const TIME_WAIT = 800;
 
 export const options = [
   {

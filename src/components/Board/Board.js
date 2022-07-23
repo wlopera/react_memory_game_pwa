@@ -14,59 +14,55 @@ import {
 const Board = () => {
   const [amountCards, setAmountCards] = useState(AMOUNT_CARDS_DEFAULT);
   const [cards, setCards] = useState([]);
-  const [cardTemp, setCardTemp] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [attemps, setAttemps] = useState(0);
+  const [click, setClick] = useState(0);
 
   useEffect(() => {
     setCards(getCards(data, amountCards));
   }, [setCards, amountCards]);
 
-  const handleSetCard = (data) => {
-    console.log(11111, data, disabled);
-    if (disabled) {
-      return;
-    }
+  useEffect(() => {
+    if (click === 1) {
+      setDisabled(false);
+    } else if (click === 2) {
+      setTimeout(() => {
+        const arrCards = cards.filter((card) => card.status === CARD_UP);
 
-    console.log(22222, data, disabled);
-    if (!cardTemp) {
-      setCardTemp({ ...data, status: CARD_UP });
-      setCards((cards) =>
-        updateCard(cards, "position", data.position, CARD_UP)
-      );
-    } else {
-      setCards((cards) =>
-        updateCard(cards, "position", data.position, CARD_UP)
-      );
-      setDisabled(true);
-    }
-    setTimeout(() => {
-      if (cardTemp && data) {
-        if (cardTemp.id === data.id) {
+        // Validar si las dos cartas seleccionadas son iguales
+        if (arrCards[0].id === arrCards[1].id) {
           setCards((cards) =>
             updateCard(cards, "status", CARD_UP, CARD_BACKGROUND)
           );
         } else {
           setCards((cards) => updateCard(cards, "status", CARD_UP, CARD_DOWN));
         }
+
         setAttemps((current) => current + 1);
-        setCardTemp(null);
+        setClick(0);
         setDisabled(false);
-      }
-    }, TIME_WAIT);
+      }, TIME_WAIT);
+    }
+  }, [disabled, click, cards]);
+
+  const handleSetCard = (data) => {
+    setClick((current) => current + 1);
+    setCards((cards) => updateCard(cards, "position", data.position, CARD_UP));
+    setDisabled(true);
   };
 
   const handleAmountCards = (event) => {
+    setClick(0);
     setAmountCards(parseInt(event.target.value));
-    setCardTemp(null);
     setDisabled(false);
     setAttemps(0);
+    setCards(getCards(data, parseInt(event.target.value)));
   };
 
   const restart = () => {
-    setCardTemp(null);
     setDisabled(false);
     setAttemps(0);
+    setClick(0);
     setCards(getCards(data, amountCards));
   };
 
