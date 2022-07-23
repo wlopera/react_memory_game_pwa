@@ -9,18 +9,6 @@ import {
 
 const CardInput = ({ onChange, id, name, position, status, disabled }) => {
   const [card, setCard] = useState(null);
-  const [width, setWidth] = useState(WIDTH_DEFAULT);
-  const [height, setHeight] = useState(HEIGHT_DEFAULT);
-
-  useEffect(() => {
-    const setDimensions = () => {
-      const { innerWidth, innerHeight } = window;
-      setWidth((innerWidth * 80) / 400);
-      setHeight((innerHeight * 80) / 400);
-    };
-
-    setDimensions();
-  }, [width, height]);
 
   useEffect(() => {
     if (status === CARD_DOWN) {
@@ -68,10 +56,7 @@ const CardInput = ({ onChange, id, name, position, status, disabled }) => {
       id={id}
       name={card.name}
       position={card.position}
-      width={width}
-      height={height}
       click={handleOnClick}
-      disabled={disabled}
       status={status}
     />
   ) : null;

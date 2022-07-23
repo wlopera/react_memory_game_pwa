@@ -1,35 +1,25 @@
 import React from "react";
-import {
-  CARD_BACKGROUND,
-  POINTER_EVENT_NONE,
-  CARD_NAME_BACKGROUND,
-} from "../../util/Constants";
+import { CARD_BACKGROUND, CARD_NAME_BACKGROUND } from "../../util/Constants";
 
-const Card = ({ id, name, width, height, click, disabled, status }) => {
+import classes from "./Card.module.css";
+
+const Card = ({ id, name, click, status }) => {
   const context =
     status === CARD_BACKGROUND ? (
-      <div style={disabled ? { pointerEvents: POINTER_EVENT_NONE } : null}>
-        <img
-          id={id}
-          className="img-fluid"
-          src={`/cards/${CARD_NAME_BACKGROUND}.svg`}
-          alt="logo1"
-          width={width}
-          height={height}
-        />
-      </div>
+      <img
+        id={id}
+        className={classes.card}
+        src={`/cards/${CARD_NAME_BACKGROUND}.svg`}
+        alt="logo1"
+      />
     ) : (
-      <div style={disabled ? { pointerEvents: POINTER_EVENT_NONE } : null}>
-        <img
-          id={id}
-          className="img-fluid"
-          src={`/cards/${name}.svg`}
-          alt="logo"
-          width={width}
-          height={height}
-          onClick={click}
-        />
-      </div>
+      <img
+        id={id}
+        className={classes.card}
+        src={`/cards/${name}.svg`}
+        alt="logo"
+        onClick={click}
+      />
     );
   return context;
 };

@@ -22,6 +22,10 @@ const Board = () => {
   }, [setCards, amountCards]);
 
   const handleSetCard = (data) => {
+    if (disabled) {
+      return;
+    }
+
     if (!cardTemp) {
       setCardTemp({ ...data, status: CARD_UP });
       setCards((cards) =>
@@ -97,7 +101,10 @@ const Board = () => {
       </div>
       <div className="row">
         {cards.map((data) => (
-          <div className="col-3 pe-2 pt-2" key={data.position}>
+          <div
+            className="col-3 pe-2 pt-2 d-flex justify-content-center"
+            key={data.position}
+          >
             <CardInput
               id={data.id}
               name={data.name}
