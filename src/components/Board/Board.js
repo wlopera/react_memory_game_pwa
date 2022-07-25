@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import CardInput from "../Card/CardInput";
 import data from "../../store/data.json";
 import { getCards, updateCard } from "../../util/Utilities";
+import Player from "../Player/Player";
+
 import {
   CARD_UP,
   CARD_DOWN,
@@ -10,6 +12,7 @@ import {
   AMOUNT_CARDS_DEFAULT,
   TIME_WAIT,
 } from "../../util/Constants";
+//import useMousePosition from "../Hooks/UseMousePosition";
 
 const Board = () => {
   const [amountCards, setAmountCards] = useState(AMOUNT_CARDS_DEFAULT);
@@ -17,37 +20,60 @@ const Board = () => {
   const [disabled, setDisabled] = useState(false);
   const [attemps, setAttemps] = useState(0);
   const [click, setClick] = useState(0);
+  const [numPlayer, setNumPlayer] = useState(0);
+  const [identifiedCards, setIdentifiedCards] = useState([]);
+  //const mousePosition = useMousePosition();
 
   useEffect(() => {
-    setCards(getCards(data, amountCards));
+    const newCards = getCards(data, amountCards);
+    setCards(newCards);
+    setNumPlayer(1);
   }, [setCards, amountCards]);
 
   useEffect(() => {
+    const arrCards = cards.filter((card) => card.status === CARD_UP);
     if (click === 1) {
       setDisabled(false);
     } else if (click === 2) {
-      setTimeout(() => {
-        const arrCards = cards.filter((card) => card.status === CARD_UP);
-
+      const timer = setTimeout(() => {
         // Validar si las dos cartas seleccionadas son iguales
         if (arrCards[0].id === arrCards[1].id) {
           setCards((cards) =>
-            updateCard(cards, "status", CARD_UP, CARD_BACKGROUND)
+            updateCard(cards, "status", CARD_UP, CARD_BACKGROUND, numPlayer)
           );
+          setIdentifiedCards((current) => {
+            let oldCards = current.filter((card) => card.id !== arrCards[0].id);
+            oldCards = oldCards.filter((card) => card.id !== arrCards[1].id);
+
+            return oldCards;
+          });
         } else {
-          setCards((cards) => updateCard(cards, "status", CARD_UP, CARD_DOWN));
+          setNumPlayer((current) => {
+            if (current === 1) {
+              return 2;
+            } else {
+              return 1;
+            }
+          });
+          setCards((cards) =>
+            updateCard(cards, "status", CARD_UP, CARD_DOWN, 0)
+          );
+          setIdentifiedCards((current) => [...current, ...arrCards]);
         }
 
         setAttemps((current) => current + 1);
         setClick(0);
         setDisabled(false);
       }, TIME_WAIT);
+      return () => clearTimeout(timer);
     }
   }, [disabled, click, cards]);
 
   const handleSetCard = (data) => {
     setClick((current) => current + 1);
-    setCards((cards) => updateCard(cards, "position", data.position, CARD_UP));
+    setCards((cards) =>
+      updateCard(cards, "position", data.position, CARD_UP, numPlayer)
+    );
     setDisabled(true);
   };
 
@@ -65,6 +91,13 @@ const Board = () => {
     setClick(0);
     setCards(getCards(data, amountCards));
   };
+
+  const player1 = cards.filter(
+    (card) => card.player === 1 && card.status === CARD_BACKGROUND
+  );
+  const player2 = cards.filter(
+    (card) => card.player === 2 && card.status === CARD_BACKGROUND
+  );
 
   return (
     <div className="container pb-2 " style={{ border: "1px solid black" }}>
@@ -97,7 +130,26 @@ const Board = () => {
         >
           Reiniciar
         </button>
+        <span className="ms-2">Puntos </span>
+        <span className="ms-2">Tu:{player1.length} </span>
+        <span className="ms-2">Máquina:{player2.length}</span>
       </div>
+      {/* <div id="MyDiv" onClick={() => console.log("Click LAPTOP")}>
+        <p>
+          Posición actual:
+          <br />
+          {JSON.stringify(mousePosition)}
+        </p>
+      </div> */}
+      {cards && (
+        <Player
+          number={numPlayer}
+          cards={cards}
+          click={handleSetCard}
+          disabled={disabled}
+          identifiedCards={identifiedCards}
+        />
+      )}
       <div className="row">
         {cards.map((data) => (
           <div

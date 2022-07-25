@@ -41,10 +41,10 @@ export const getCards = (data, amountCards) => {
   return cardList;
 };
 
-export const updateCard = (cards, field, valueField, status) => {
+export const updateCard = (cards, field, valueField, status, numPlayer) => {
   return cards.map((card) => {
     if (valueField === card[field]) {
-      return { ...card, status };
+      return { ...card, status, player: numPlayer };
     }
     return card;
   });
