@@ -7,6 +7,11 @@ const Player = ({ number, cards, click, disabled, identifiedCards }) => {
     if (number === 2 && !disabled) {
       const upCard = cards.filter((card) => card.status === CARD_UP);
       const listCard = cards.filter((card) => card.status === CARD_DOWN);
+      // const showsCard = cards.filter(
+      //   (card) => card.status === CARD_DOWN && card.player !== -1
+      // );
+
+      // console.log(12345, cards, listCard, showsCard);
 
       let seletionCard = null;
       if (upCard && upCard.length > 0) {
@@ -29,7 +34,11 @@ const Player = ({ number, cards, click, disabled, identifiedCards }) => {
     }
   });
 
-  return <div>Jugador: {number}</div>;
+  return (
+    <div className="bg-success text-center fs-6 text-white">
+      {number === 1 ? "RETADOR" : "COMPUTADORA"}
+    </div>
+  );
 };
 
 export default Player;

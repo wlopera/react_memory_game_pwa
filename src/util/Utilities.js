@@ -17,12 +17,14 @@ export const getCards = (data, amountCards) => {
           name: newData.label,
           position: cardList.length + 1,
           status: CARD_DOWN,
+          player: -1,
         });
         cardList.push({
           id: newData.id,
           name: newData.label,
           position: cardList.length + 1,
           status: CARD_DOWN,
+          player: -1,
         });
       }
     }

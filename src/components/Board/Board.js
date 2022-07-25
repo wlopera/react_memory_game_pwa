@@ -70,6 +70,16 @@ const Board = () => {
   }, [disabled, click, cards]);
 
   const handleSetCard = (data) => {
+    if (numPlayer === 1) {
+      setClick((current) => current + 1);
+      setCards((cards) =>
+        updateCard(cards, "position", data.position, CARD_UP, numPlayer)
+      );
+      setDisabled(true);
+    }
+  };
+
+  const handlePlayerSetCard = (data) => {
     setClick((current) => current + 1);
     setCards((cards) =>
       updateCard(cards, "position", data.position, CARD_UP, numPlayer)
@@ -102,7 +112,7 @@ const Board = () => {
   return (
     <div className="container pb-2 " style={{ border: "1px solid black" }}>
       <div className="d-flex justify-content-center align-items-center bg-primary text-white">
-        <span className="fs-4 ms-2">Memoria</span>
+        <span className="fs-6 ms-2">Memoria</span>
         <span className="ps-2 ">Cartas</span>
         <select
           className="ms-2"
@@ -131,8 +141,8 @@ const Board = () => {
           Reiniciar
         </button>
         <span className="ms-2">Puntos </span>
-        <span className="ms-2">Tu:{player1.length} </span>
-        <span className="ms-2">Máquina:{player2.length}</span>
+        <span className="ms-2">Retador: {player1.length} </span>
+        <span className="ms-2">Máquina: {player2.length}</span>
       </div>
       {/* <div id="MyDiv" onClick={() => console.log("Click LAPTOP")}>
         <p>
@@ -145,7 +155,7 @@ const Board = () => {
         <Player
           number={numPlayer}
           cards={cards}
-          click={handleSetCard}
+          click={handlePlayerSetCard}
           disabled={disabled}
           identifiedCards={identifiedCards}
         />
