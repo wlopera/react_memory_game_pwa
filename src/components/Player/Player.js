@@ -5,6 +5,7 @@ import { CARD_DOWN, CARD_UP } from "../../util/Constants";
 const Player = ({ number, cards, click, disabled, identifiedCards }) => {
   useEffect(() => {
     if (number === 2 && !disabled) {
+      // Revisar proxima jugada
       const upCard = cards.filter((card) => card.status === CARD_UP);
       const listCard = cards.filter((card) => card.status === CARD_DOWN);
       // const showsCard = cards.filter(
@@ -22,6 +23,7 @@ const Player = ({ number, cards, click, disabled, identifiedCards }) => {
       }
 
       const timer = setTimeout(() => {
+        // Enviar click automatico
         if (seletionCard && seletionCard.length > 0) {
           click(seletionCard[0]);
         } else {

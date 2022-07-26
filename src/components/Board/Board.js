@@ -38,9 +38,24 @@ const Board = () => {
       const timer = setTimeout(() => {
         // Validar si las dos cartas seleccionadas son iguales
         if (arrCards[0].id === arrCards[1].id) {
-          setCards((cards) =>
-            updateCard(cards, "status", CARD_UP, CARD_BACKGROUND, numPlayer)
-          );
+          setCards((cards) => {
+            const newCards = updateCard(
+              cards,
+              "status",
+              CARD_UP,
+              CARD_BACKGROUND,
+              numPlayer
+            );
+            const totalBackground = newCards.filter(
+              (card) => card.status === CARD_BACKGROUND
+            );
+
+            console.log(12345, totalBackground.length, amountCards);
+            if (totalBackground.length === amountCards) {
+              setNumPlayer(0);
+            }
+            return newCards;
+          });
           setIdentifiedCards((current) => {
             let oldCards = current.filter((card) => card.id !== arrCards[0].id);
             oldCards = oldCards.filter((card) => card.id !== arrCards[1].id);
@@ -71,11 +86,7 @@ const Board = () => {
 
   const handleSetCard = (data) => {
     if (numPlayer === 1) {
-      setClick((current) => current + 1);
-      setCards((cards) =>
-        updateCard(cards, "position", data.position, CARD_UP, numPlayer)
-      );
-      setDisabled(true);
+      handlePlayerSetCard(data);
     }
   };
 
@@ -93,6 +104,7 @@ const Board = () => {
     setDisabled(false);
     setAttemps(0);
     setCards(getCards(data, parseInt(event.target.value)));
+    setNumPlayer(1);
   };
 
   const restart = () => {
@@ -100,6 +112,7 @@ const Board = () => {
     setAttemps(0);
     setClick(0);
     setCards(getCards(data, amountCards));
+    setNumPlayer(1);
   };
 
   const player1 = cards.filter(
@@ -108,6 +121,15 @@ const Board = () => {
   const player2 = cards.filter(
     (card) => card.player === 2 && card.status === CARD_BACKGROUND
   );
+
+  let imgEnd = null;
+  if (player1.length + player2.length === amountCards) {
+    if (player1.length > player2.length) {
+      imgEnd = "winner.gif";
+    } else {
+      imgEnd = "game-over.gif";
+    }
+  }
 
   return (
     <div className="container pb-2 " style={{ border: "1px solid black" }}>
@@ -160,22 +182,26 @@ const Board = () => {
           identifiedCards={identifiedCards}
         />
       )}
-      <div className="row">
-        {cards.map((data) => (
-          <div
-            className="col-3 pe-2 pt-2 d-flex justify-content-center"
-            key={data.position}
-          >
-            <CardInput
-              id={data.id}
-              name={data.name}
-              position={data.position}
-              status={data.status}
-              onChange={handleSetCard}
-              disabled={disabled}
-            />
-          </div>
-        ))}
+      <div className="row bg-gray-200">
+        {imgEnd ? (
+          <img src={`/cards/${imgEnd}`} alt="logoEnd" />
+        ) : (
+          cards.map((data) => (
+            <div
+              className="col-3 pe-2 pt-2 d-flex justify-content-center"
+              key={data.position}
+            >
+              <CardInput
+                id={data.id}
+                name={data.name}
+                position={data.position}
+                status={data.status}
+                onChange={handleSetCard}
+                disabled={disabled}
+              />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
