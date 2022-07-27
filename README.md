@@ -11,3 +11,11 @@ Juego de Memoria en React APP con PWA
 
 ## Subida a Netlify. Prueba remota
 
+## Nueva version repo : move_pc:
+### Jugar contra la Máquina
+
+![Captura1](https://user-images.githubusercontent.com/7141537/181139718-af39d80b-40c9-4f7a-b37e-13ad5792c5c6.PNG)
+![Captura2](https://user-images.githubusercontent.com/7141537/181139716-7043c5ee-7fac-45c3-82a5-90053b195904.PNG)
+![Captura3](https://user-images.githubusercontent.com/7141537/181139717-0cd90b4d-9bc2-46e1-b01d-5effb51a0b06.PNG)
+
+DEMO: https://reliable-wisp-6f7518.netlify.app
