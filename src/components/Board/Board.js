@@ -75,6 +75,7 @@ const Board = () => {
     setClick(0);
     setAttemps(0);
     setNumPlayer(1);
+    setIdentifiedCards([]);
   };
 
   const restart = () => {
@@ -83,6 +84,7 @@ const Board = () => {
     setAttemps(0);
     setClick(0);
     setNumPlayer(1);
+    setIdentifiedCards([]);
   };
 
   const player1 = cards.filter(

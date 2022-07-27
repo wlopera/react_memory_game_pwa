@@ -59,8 +59,12 @@ export const secondClick = (
       return newCards;
     });
     setIdentifiedCards((current) => {
-      let oldCards = current.filter((card) => card.id !== arrCards[0].id);
-      oldCards = oldCards.filter((card) => card.id !== arrCards[1].id);
+      let oldCards = current.filter(
+        (card) => card.position !== arrCards[0].position
+      );
+      oldCards = oldCards.filter(
+        (card) => card.position !== arrCards[1].position
+      );
 
       return oldCards;
     });
@@ -73,10 +77,41 @@ export const secondClick = (
       }
     });
     setCards((cards) => updateCard(cards, "status", CARD_UP, CARD_DOWN, 0));
-    setIdentifiedCards((current) => [...current, ...arrCards]);
+
+    // Limpio los registros y actualizo
+    setIdentifiedCards((current) => {
+      let oldCards = current.filter(
+        (card) => card.position !== arrCards[0].position
+      );
+      oldCards = oldCards.filter(
+        (card) => card.position !== arrCards[1].position
+      );
+      return [...oldCards, ...arrCards];
+    });
   }
 
   setAttemps((current) => current + 1);
   setClick(0);
   setDisabled(false);
+};
+
+export const getCardRepeat = (cards) => {
+  // Agrupa lista de cartas repetidas si existen
+  const arr = cards.reduce((acc, card) => {
+    if (!acc[card.id]) {
+      acc[card.id] = [];
+    }
+    acc[card.id].push(card);
+    return acc;
+  }, {});
+
+  // Retorna la primera carta repetida si existe
+  let data = null;
+  for (var i in arr) {
+    if (arr[i].length === 2) {
+      data = arr[i][0];
+    }
+  }
+
+  return data;
 };

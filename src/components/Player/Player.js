@@ -6,6 +6,7 @@ import {
   GAME_HUMAN,
   GAME_MACHINE,
 } from "../../util/Constants";
+import { getCardRepeat } from "../../helpers/games";
 
 const Player = ({ number, cards, click, disabled, identifiedCards }) => {
   useEffect(() => {
@@ -15,11 +16,6 @@ const Player = ({ number, cards, click, disabled, identifiedCards }) => {
       const activeCards = cards.filter((card) => card.status === CARD_DOWN);
 
       console.log(123, identifiedCards);
-      // const showsCard = cards.filter(
-      //   (card) => card.status === CARD_DOWN && card.player !== -1
-      // );
-
-      // console.log(12345, cards, activeCards, showsCard);
 
       let seletionCard = null;
       if (upCard && upCard.length > 0) {
@@ -32,11 +28,21 @@ const Player = ({ number, cards, click, disabled, identifiedCards }) => {
       const timer = setTimeout(() => {
         // Enviar click automatico
         if (seletionCard && seletionCard.length > 0) {
+          // Segundo click
           click(seletionCard[0]);
         } else {
-          const numRandom = getRandom(0, activeCards.length - 1);
-          const card = activeCards[numRandom];
-          click(card);
+          // primer click
+
+          // Busca la primera carta repetida que se alla mostrado previamente
+          const data = getCardRepeat(identifiedCards);
+          console.log(12345, data);
+          if (data) {
+            click(data);
+          } else {
+            const numRandom = getRandom(0, activeCards.length - 1);
+            const card = activeCards[numRandom];
+            click(card);
+          }
         }
       }, 2000);
       return () => clearTimeout(timer);
