@@ -69,6 +69,10 @@ export const secondClick = (
       return oldCards;
     });
   } else {
+    setCards((cards) =>
+      updateCard(cards, "status", CARD_UP, CARD_DOWN, numPlayer)
+    );
+
     setNumPlayer((current) => {
       if (current === 1) {
         return 2;
@@ -76,7 +80,6 @@ export const secondClick = (
         return 1;
       }
     });
-    setCards((cards) => updateCard(cards, "status", CARD_UP, CARD_DOWN, 0));
 
     // Limpio los registros y actualizo
     setIdentifiedCards((current) => {

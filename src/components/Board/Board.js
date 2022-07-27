@@ -13,6 +13,11 @@ import {
   CARD_BACKGROUND,
   AMOUNT_CARDS_DEFAULT,
   TIME_WAIT,
+  PLAYER_WINNER,
+  MACHINE_WINNER,
+  PLAYERS_TIED,
+  LEVEL_MACHINE_DEFAULT,
+  PLAYER_START_GAME,
 } from "../../util/Constants";
 
 const Board = () => {
@@ -23,11 +28,12 @@ const Board = () => {
   const [click, setClick] = useState(0);
   const [numPlayer, setNumPlayer] = useState(0);
   const [identifiedCards, setIdentifiedCards] = useState([]);
+  const [level, setLevel] = useState(LEVEL_MACHINE_DEFAULT);
 
   useEffect(() => {
     const newCards = getCards(data, amountCards);
     setCards(newCards);
-    setNumPlayer(1);
+    setNumPlayer(PLAYER_START_GAME);
   }, [setCards, amountCards]);
 
   useEffect(() => {
@@ -50,7 +56,7 @@ const Board = () => {
       }, TIME_WAIT);
       return () => clearTimeout(timer);
     }
-  }, [disabled, click, cards]);
+  }, [disabled, click, cards, numPlayer, amountCards]);
 
   const handleSetCard = (data) => {
     // Permite solo procesar las opcione de click de manera manual (humano)
@@ -78,12 +84,22 @@ const Board = () => {
     setIdentifiedCards([]);
   };
 
+  const onChangeLevel = (event) => {
+    setLevel(parseInt(event.target.value));
+    setCards(getCards(data, amountCards));
+    setDisabled(false);
+    setAttemps(0);
+    setClick(0);
+    setNumPlayer(PLAYER_START_GAME);
+    setIdentifiedCards([]);
+  };
+
   const restart = () => {
     setCards(getCards(data, amountCards));
     setDisabled(false);
     setAttemps(0);
     setClick(0);
-    setNumPlayer(1);
+    setNumPlayer(PLAYER_START_GAME);
     setIdentifiedCards([]);
   };
 
@@ -99,8 +115,10 @@ const Board = () => {
   const contextPlayer = imgEnd ? (
     <h1 className="fs-4 bg-danger text-white">
       {imgEnd.includes("winner")
-        ? "Eres el ganador"
-        : "La computadora es la ganadora"}
+        ? PLAYER_WINNER
+        : imgEnd.includes("over")
+        ? MACHINE_WINNER
+        : PLAYERS_TIED}
     </h1>
   ) : (
     <Player
@@ -109,6 +127,7 @@ const Board = () => {
       click={handlePlayerSetCard}
       disabled={disabled}
       identifiedCards={identifiedCards}
+      level={level}
     />
   );
 
@@ -137,6 +156,8 @@ const Board = () => {
       <Header
         amountCards={amountCards}
         onAmountCards={handleAmountCards}
+        level={level}
+        onChangeLevel={onChangeLevel}
         attemps={attemps}
         onRestart={restart}
         player={player1}

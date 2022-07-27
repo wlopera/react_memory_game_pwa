@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   options,
+  levels,
   GAME_NAME,
   GAME_CARDS,
   GAME_ATTEMPTS,
@@ -9,11 +10,14 @@ import {
   GAME_HUMAN,
   GAME_MACHINE,
   BUTTON_INIT,
+  GAME_LEVEL,
 } from "../../util/Constants";
 
 const Header = ({
   amountCards,
   onAmountCards,
+  level,
+  onChangeLevel,
   attemps,
   onRestart,
   player,
@@ -22,7 +26,7 @@ const Header = ({
   return (
     <div className="d-flex justify-content-center align-items-center bg-primary text-white">
       <span className="fs-6 ms-2">{GAME_NAME}</span>
-      <span className="ps-2 ">{GAME_CARDS}</span>
+      <span className="ps-4">{GAME_CARDS}</span>
       <select
         className="ms-2"
         onChange={onAmountCards}
@@ -32,6 +36,19 @@ const Header = ({
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
+          </option>
+        ))}
+      </select>
+      <span className="ps-2 ">{GAME_LEVEL}</span>
+      <select
+        className="ms-2"
+        onChange={onChangeLevel}
+        value={level}
+        style={{ fontSize: "15px" }}
+      >
+        {levels.map((level) => (
+          <option key={level.value} value={level.value}>
+            {level.label}
           </option>
         ))}
       </select>

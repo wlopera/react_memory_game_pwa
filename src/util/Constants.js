@@ -8,18 +8,24 @@ export const CARD_NAME_BACKGROUND = "fondo0";
 export const GAME_WINNER = "winner";
 export const GAME_OVER = "game-over";
 export const GAME_TIED = "game-tied";
+export const PLAYER_WINNER = "Eres el ganador";
+export const MACHINE_WINNER = "La computadora es la ganadora";
+export const PLAYERS_TIED = "No hay ganador en mesa";
 
-export const GAME_NAME = "Memoria";
+export const GAME_NAME = "M E M O R I A";
 export const GAME_CARDS = "Cartas";
 export const GAME_ATTEMPTS = "Intentos";
 export const GAME_POINTS = "Puntos";
 export const GAME_HUMAN = "Retador";
 export const GAME_MACHINE = "Máquina";
+export const GAME_LEVEL = "Nivel";
 export const BUTTON_INIT = "Reiniciar";
 
 export const START_NUMBER_CARD = 33;
 export const END_NUMBER_CARD = 52;
+export const PLAYER_START_GAME = 2;
 export const AMOUNT_CARDS_DEFAULT = 16;
+export const LEVEL_MACHINE_DEFAULT = 1;
 export const TIME_WAIT = 3000;
 
 export const options = [
@@ -38,5 +44,20 @@ export const options = [
   {
     label: "32",
     value: 32,
+  },
+];
+
+export const levels = [
+  {
+    label: "Humano",
+    value: 1,
+  },
+  {
+    label: "Genio",
+    value: 2,
+  },
+  {
+    label: "Imposible",
+    value: 3,
   },
 ];
