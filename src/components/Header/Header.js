@@ -3,14 +3,14 @@ import React from "react";
 import {
   options,
   levels,
-  GAME_NAME,
+  // GAME_NAME,
   GAME_CARDS,
-  GAME_ATTEMPTS,
-  GAME_POINTS,
+  // GAME_ATTEMPTS,
+  // GAME_POINTS,
   GAME_HUMAN,
   GAME_MACHINE,
   BUTTON_INIT,
-  GAME_LEVEL,
+  // GAME_LEVEL,
 } from "../../util/Constants";
 
 const Header = ({
@@ -18,10 +18,11 @@ const Header = ({
   onAmountCards,
   level,
   onChangeLevel,
-  attemps,
+  // attemps,
   onRestart,
   player,
   machine,
+  isMobile,
 }) => {
   return (
     <div className="d-flex justify-content-center align-items-center bg-primary text-white">
@@ -39,7 +40,7 @@ const Header = ({
           </option>
         ))}
       </select>
-      <span className="ps-2 ">{GAME_LEVEL}</span>
+      {/* <span className="ps-2 ">{GAME_LEVEL}</span> */}
       <select
         className="ms-2"
         onChange={onChangeLevel}
@@ -57,8 +58,12 @@ const Header = ({
       </span> */}
 
       {/* <span className="ms-2">{GAME_POINTS} </span> */}
-      <span className="ms-2">{player.length} - </span>
-      <span className="ms-2">{machine.length}</span>
+      <span className="ms-2">
+        {isMobile ? `${player.length}` : `${GAME_HUMAN}: ${player.length}`}
+      </span>
+      <span className="ms-2">
+        {isMobile ? `${machine.length}` : `${GAME_MACHINE}: ${machine.length}`}
+      </span>
       <button
         className="ms-2"
         style={{

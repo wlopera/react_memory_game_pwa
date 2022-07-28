@@ -146,6 +146,7 @@ const Board = ({ isMobile }) => {
         onRestart={restart}
         player={player1}
         machine={player2}
+        isMobile={isMobile}
       />
       {contextPlayer}
       {contextBody}
