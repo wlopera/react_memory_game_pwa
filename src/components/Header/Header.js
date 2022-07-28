@@ -25,7 +25,7 @@ const Header = ({
 }) => {
   return (
     <div className="d-flex justify-content-center align-items-center bg-primary text-white">
-      <span className="fs-6 ms-2">{GAME_NAME}</span>
+      {/* <span className="fs-6 ms-2">{GAME_NAME}</span> */}
       <span className="ps-4">{GAME_CARDS}</span>
       <select
         className="ms-2"
@@ -52,17 +52,13 @@ const Header = ({
           </option>
         ))}
       </select>
-      <span className="ms-2">
+      {/* <span className="ms-2">
         {GAME_ATTEMPTS}: {attemps}
-      </span>
+      </span> */}
 
-      <span className="ms-2">{GAME_POINTS} </span>
-      <span className="ms-2">
-        {GAME_HUMAN}: {player.length}{" "}
-      </span>
-      <span className="ms-2">
-        {GAME_MACHINE}: {machine.length}
-      </span>
+      {/* <span className="ms-2">{GAME_POINTS} </span> */}
+      <span className="ms-2">{player.length} - </span>
+      <span className="ms-2">{machine.length}</span>
       <button
         className="ms-2"
         style={{

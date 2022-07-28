@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import CardInput from "../Card/CardInput";
 import data from "../../store/data.json";
 import Header from "../Header/Header";
-import Player from "../Player/Player";
 
 import { getCards, updateCard } from "../../helpers/card";
 import { secondClick, evaluatEndGame } from "../../helpers/game";
@@ -15,11 +13,16 @@ import {
   TIME_WAIT,
   LEVEL_MACHINE_DEFAULT,
   PLAYER_START_GAME,
+  PLAYER_WINNER,
 } from "../../util/Constants";
 
-import { getBodyMobile, getBodyWEB } from "../../helpers/board";
+import {
+  getBodyMobile,
+  getBodyWEB,
+  getContextPlayer,
+} from "../../helpers/board";
 
-const Board = () => {
+const Board = ({ isMobile }) => {
   const [amountCards, setAmountCards] = useState(AMOUNT_CARDS_DEFAULT);
   const [cards, setCards] = useState([]);
   const [disabled, setDisabled] = useState(false);
@@ -111,7 +114,7 @@ const Board = () => {
 
   const imgEnd = evaluatEndGame(player1.length, player2.length, amountCards);
 
-  const contextPlayer = getBodyMobile(
+  const contextPlayer = getContextPlayer(
     imgEnd,
     numPlayer,
     cards,
@@ -120,16 +123,20 @@ const Board = () => {
     identifiedCards,
     level
   );
-  const contextBodyWEB = getBodyWEB(
-    imgEnd,
-    amountCards / 4,
-    cards,
-    handleSetCard,
-    disabled
-  );
+
+  const contextBody = isMobile
+    ? getBodyMobile(imgEnd, cards, handleSetCard, disabled, isMobile)
+    : getBodyWEB(
+        imgEnd,
+        amountCards / 4,
+        cards,
+        handleSetCard,
+        disabled,
+        isMobile
+      );
 
   return (
-    <div className="container pb-2 " style={{ border: "1px solid black" }}>
+    <div className="container pb-2" style={{ border: "1px solid black" }}>
       <Header
         amountCards={amountCards}
         onAmountCards={handleAmountCards}
@@ -141,7 +148,7 @@ const Board = () => {
         machine={player2}
       />
       {contextPlayer}
-      {contextBodyWEB}
+      {contextBody}
     </div>
   );
 };

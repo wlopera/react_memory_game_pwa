@@ -16,7 +16,7 @@ export const GAME_NAME = "M E M O R I A";
 export const GAME_CARDS = "Cartas";
 export const GAME_ATTEMPTS = "Intentos";
 export const GAME_POINTS = "Puntos";
-export const GAME_HUMAN = "Retador";
+export const GAME_HUMAN = "Humano";
 export const GAME_MACHINE = "Máquina";
 export const GAME_LEVEL = "Nivel";
 export const BUTTON_INIT = "Reiniciar";
@@ -65,15 +65,15 @@ export const options = [
 
 export const levels = [
   {
-    label: "Básico",
+    label: "1",
     value: 1,
   },
   {
-    label: "Medio",
+    label: "2",
     value: 2,
   },
   {
-    label: "Avanzado",
+    label: "3",
     value: 3,
   },
 ];

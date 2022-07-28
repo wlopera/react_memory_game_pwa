@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Card from "./Card";
+
+import CardMobile from "./CardMobile";
+import CardWEB from "./CardWEB";
 import { CARD_DOWN, CARD_NAME_BACK } from "../../util/Constants";
 
 const CardInput = ({
@@ -10,6 +12,7 @@ const CardInput = ({
   status,
   disabled,
   width,
+  isMobile,
 }) => {
   const [card, setCard] = useState(null);
 
@@ -58,14 +61,24 @@ const CardInput = ({
   };
 
   return card ? (
-    <Card
-      id={id}
-      name={card.name}
-      position={card.position}
-      click={handleOnClick}
-      status={status}
-      width={width}
-    />
+    isMobile ? (
+      <CardMobile
+        id={id}
+        name={card.name}
+        position={card.position}
+        click={handleOnClick}
+        status={status}
+      />
+    ) : (
+      <CardWEB
+        id={id}
+        name={card.name}
+        position={card.position}
+        click={handleOnClick}
+        status={status}
+        width={width}
+      />
+    )
   ) : null;
 };
 
