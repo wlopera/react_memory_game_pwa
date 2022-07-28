@@ -23,7 +23,7 @@ export const BUTTON_INIT = "Reiniciar";
 
 export const START_NUMBER_CARD = 33;
 export const END_NUMBER_CARD = 52;
-export const PLAYER_START_GAME = 1;
+export const PLAYER_START_GAME = 2;
 export const AMOUNT_CARDS_DEFAULT = 16;
 export const LEVEL_MACHINE_DEFAULT = 1;
 export const TIME_WAIT = 3000;
