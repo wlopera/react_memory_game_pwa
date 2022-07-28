@@ -28,7 +28,7 @@ DEMO: https://reliable-wisp-6f7518.netlify.app
 ![Captura2](https://user-images.githubusercontent.com/7141537/181645956-e1a0b131-f7b0-48c0-9cdf-530c1919889b.PNG)
 ![Captura3](https://user-images.githubusercontent.com/7141537/181645959-4df5a179-3d40-45f7-aa15-b6d51646b4a7.PNG)
 
-##Celular
+## Celular
 ![Captura](https://user-images.githubusercontent.com/7141537/181646294-791e6a53-0fa3-46a7-ba78-47dd93d2d006.PNG)
 
 
