@@ -8,7 +8,7 @@ import {
 } from "../util/Constants";
 
 import { getRandom } from "../util/Utilities";
-import { updateCard } from "../helpers/cards";
+import { updateCard } from "./card";
 
 export const evaluatEndGame = (numPlayer, numMachine, amountCards) => {
   let imgEnd = null;
@@ -69,6 +69,10 @@ export const secondClick = (
       return oldCards;
     });
   } else {
+    setCards((cards) =>
+      updateCard(cards, "status", CARD_UP, CARD_DOWN, numPlayer)
+    );
+
     setNumPlayer((current) => {
       if (current === 1) {
         return 2;
@@ -76,7 +80,6 @@ export const secondClick = (
         return 1;
       }
     });
-    setCards((cards) => updateCard(cards, "status", CARD_UP, CARD_DOWN, 0));
 
     // Limpio los registros y actualizo
     setIdentifiedCards((current) => {

@@ -3,7 +3,7 @@ import { CARD_BACKGROUND, CARD_NAME_BACKGROUND } from "../../util/Constants";
 
 import classes from "./Card.module.css";
 
-const Card = ({ id, name, click, status }) => {
+const CardMobile = ({ id, name, click, status }) => {
   const context =
     status === CARD_BACKGROUND ? (
       <img
@@ -24,4 +24,4 @@ const Card = ({ id, name, click, status }) => {
   return context;
 };
 
-export default Card;
+export default CardMobile;

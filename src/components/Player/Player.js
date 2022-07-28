@@ -6,16 +6,14 @@ import {
   GAME_HUMAN,
   GAME_MACHINE,
 } from "../../util/Constants";
-import { getCardRepeat } from "../../helpers/games";
+import { getCardRepeat } from "../../helpers/game";
 
-const Player = ({ number, cards, click, disabled, identifiedCards }) => {
+const Player = ({ number, cards, click, disabled, identifiedCards, level }) => {
   useEffect(() => {
     if (number === 2 && !disabled) {
       // Revisar proxima jugada
       const upCard = cards.filter((card) => card.status === CARD_UP);
       const activeCards = cards.filter((card) => card.status === CARD_DOWN);
-
-      console.log(123, identifiedCards);
 
       let seletionCard = null;
       if (upCard && upCard.length > 0) {
@@ -32,16 +30,28 @@ const Player = ({ number, cards, click, disabled, identifiedCards }) => {
           click(seletionCard[0]);
         } else {
           // primer click
+          let data = null;
 
-          // Busca la primera carta repetida que se alla mostrado previamente
-          const data = getCardRepeat(identifiedCards);
-          console.log(12345, data);
+          // Nivel 2: Busca la primera carta repetida ya descubierta
+          if (level === 2 || level === 3) {
+            data = getCardRepeat(identifiedCards);
+          }
+
+          // Nivel 3: Si no hay carta primera carta repetida, seleccionar nueva carta no mostrada previamente
+          if (!data && level === 3) {
+            const listCards = cards.filter((card) => card.player === -1);
+            if (listCards.length > 0) {
+              const random = getRandom(0, listCards.length - 1);
+              data = listCards[random];
+            }
+          }
+
           if (data) {
-            click(data);
+            click({ ...data, player: number });
           } else {
             const numRandom = getRandom(0, activeCards.length - 1);
             const card = activeCards[numRandom];
-            click(card);
+            click({ ...card, player: number });
           }
         }
       }, 2000);

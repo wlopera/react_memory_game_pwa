@@ -48,7 +48,7 @@ export const getCards = (data, amountCards) => {
 export const updateCard = (cards, field, valueField, status, numPlayer) => {
   return cards.map((card) => {
     if (valueField === card[field]) {
-      return { ...card, status, player: numPlayer };
+      return { ...card, status: status, player: numPlayer };
     }
     return card;
   });

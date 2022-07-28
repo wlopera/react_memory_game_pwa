@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 
-import CardInput from "../Card/CardInput";
 import data from "../../store/data.json";
 import Header from "../Header/Header";
-import Player from "../Player/Player";
 
-import { getCards, updateCard } from "../../helpers/cards";
-import { secondClick, evaluatEndGame } from "../../helpers/games";
+import { getCards, updateCard } from "../../helpers/card";
+import { secondClick, evaluatEndGame } from "../../helpers/game";
 
 import {
   CARD_UP,
   CARD_BACKGROUND,
   AMOUNT_CARDS_DEFAULT,
   TIME_WAIT,
+  LEVEL_MACHINE_DEFAULT,
+  PLAYER_START_GAME,
 } from "../../util/Constants";
 
-const Board = () => {
+import {
+  getBodyMobile,
+  getBodyWEB,
+  getContextPlayer,
+} from "../../helpers/board";
+
+const Board = ({ isMobile }) => {
   const [amountCards, setAmountCards] = useState(AMOUNT_CARDS_DEFAULT);
   const [cards, setCards] = useState([]);
   const [disabled, setDisabled] = useState(false);
@@ -23,11 +29,12 @@ const Board = () => {
   const [click, setClick] = useState(0);
   const [numPlayer, setNumPlayer] = useState(0);
   const [identifiedCards, setIdentifiedCards] = useState([]);
+  const [level, setLevel] = useState(LEVEL_MACHINE_DEFAULT);
 
   useEffect(() => {
     const newCards = getCards(data, amountCards);
     setCards(newCards);
-    setNumPlayer(1);
+    setNumPlayer(PLAYER_START_GAME);
   }, [setCards, amountCards]);
 
   useEffect(() => {
@@ -50,7 +57,7 @@ const Board = () => {
       }, TIME_WAIT);
       return () => clearTimeout(timer);
     }
-  }, [disabled, click, cards]);
+  }, [disabled, click, cards, numPlayer, amountCards]);
 
   const handleSetCard = (data) => {
     // Permite solo procesar las opcione de click de manera manual (humano)
@@ -78,12 +85,22 @@ const Board = () => {
     setIdentifiedCards([]);
   };
 
+  const onChangeLevel = (event) => {
+    setLevel(parseInt(event.target.value));
+    setCards(getCards(data, amountCards));
+    setDisabled(false);
+    setAttemps(0);
+    setClick(0);
+    setNumPlayer(PLAYER_START_GAME);
+    setIdentifiedCards([]);
+  };
+
   const restart = () => {
     setCards(getCards(data, amountCards));
     setDisabled(false);
     setAttemps(0);
     setClick(0);
-    setNumPlayer(1);
+    setNumPlayer(PLAYER_START_GAME);
     setIdentifiedCards([]);
   };
 
@@ -96,54 +113,42 @@ const Board = () => {
 
   const imgEnd = evaluatEndGame(player1.length, player2.length, amountCards);
 
-  const contextPlayer = imgEnd ? (
-    <h1 className="fs-4 bg-danger text-white">
-      {imgEnd.includes("winner")
-        ? "Eres el ganador"
-        : "La computadora es la ganadora"}
-    </h1>
-  ) : (
-    <Player
-      number={numPlayer}
-      cards={cards}
-      click={handlePlayerSetCard}
-      disabled={disabled}
-      identifiedCards={identifiedCards}
-    />
+  const contextPlayer = getContextPlayer(
+    imgEnd,
+    numPlayer,
+    cards,
+    handlePlayerSetCard,
+    disabled,
+    identifiedCards,
+    level
   );
 
-  const contextBody = imgEnd ? (
-    <img src={`/cards/${imgEnd}.gif`} alt="logoEnd" />
-  ) : (
-    cards.map((data) => (
-      <div
-        className="col-3 pe-2 pt-2 d-flex justify-content-center"
-        key={data.position}
-      >
-        <CardInput
-          id={data.id}
-          name={data.name}
-          position={data.position}
-          status={data.status}
-          onChange={handleSetCard}
-          disabled={disabled}
-        />
-      </div>
-    ))
-  );
+  const contextBody = isMobile
+    ? getBodyMobile(imgEnd, cards, handleSetCard, disabled, isMobile)
+    : getBodyWEB(
+        imgEnd,
+        amountCards / 4,
+        cards,
+        handleSetCard,
+        disabled,
+        isMobile
+      );
 
   return (
-    <div className="container pb-2 " style={{ border: "1px solid black" }}>
+    <div className="container pb-2" style={{ border: "1px solid black" }}>
       <Header
         amountCards={amountCards}
         onAmountCards={handleAmountCards}
+        level={level}
+        onChangeLevel={onChangeLevel}
         attemps={attemps}
         onRestart={restart}
         player={player1}
         machine={player2}
+        isMobile={isMobile}
       />
       {contextPlayer}
-      <div className="row">{contextBody}</div>
+      {contextBody}
     </div>
   );
 };
