@@ -8,7 +8,7 @@ import {
 } from "../util/Constants";
 
 import { getRandom } from "../util/Utilities";
-import { updateCard } from "../helpers/cards";
+import { updateCard } from "./card";
 
 export const evaluatEndGame = (numPlayer, numMachine, amountCards) => {
   let imgEnd = null;

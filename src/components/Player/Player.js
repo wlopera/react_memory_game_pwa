@@ -6,7 +6,7 @@ import {
   GAME_HUMAN,
   GAME_MACHINE,
 } from "../../util/Constants";
-import { getCardRepeat } from "../../helpers/games";
+import { getCardRepeat } from "../../helpers/game";
 
 const Player = ({ number, cards, click, disabled, identifiedCards, level }) => {
   useEffect(() => {

@@ -23,7 +23,7 @@ export const BUTTON_INIT = "Reiniciar";
 
 export const START_NUMBER_CARD = 33;
 export const END_NUMBER_CARD = 52;
-export const PLAYER_START_GAME = 2;
+export const PLAYER_START_GAME = 1;
 export const AMOUNT_CARDS_DEFAULT = 16;
 export const LEVEL_MACHINE_DEFAULT = 1;
 export const TIME_WAIT = 3000;
@@ -38,8 +38,24 @@ export const options = [
     value: 8,
   },
   {
+    label: "12",
+    value: 12,
+  },
+  {
     label: "16",
     value: 16,
+  },
+  {
+    label: "20",
+    value: 20,
+  },
+  {
+    label: "24",
+    value: 24,
+  },
+  {
+    label: "28",
+    value: 28,
   },
   {
     label: "32",
@@ -49,15 +65,15 @@ export const options = [
 
 export const levels = [
   {
-    label: "Humano",
+    label: "Básico",
     value: 1,
   },
   {
-    label: "Genio",
+    label: "Medio",
     value: 2,
   },
   {
-    label: "Imposible",
+    label: "Avanzado",
     value: 3,
   },
 ];

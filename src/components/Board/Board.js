@@ -5,20 +5,19 @@ import data from "../../store/data.json";
 import Header from "../Header/Header";
 import Player from "../Player/Player";
 
-import { getCards, updateCard } from "../../helpers/cards";
-import { secondClick, evaluatEndGame } from "../../helpers/games";
+import { getCards, updateCard } from "../../helpers/card";
+import { secondClick, evaluatEndGame } from "../../helpers/game";
 
 import {
   CARD_UP,
   CARD_BACKGROUND,
   AMOUNT_CARDS_DEFAULT,
   TIME_WAIT,
-  PLAYER_WINNER,
-  MACHINE_WINNER,
-  PLAYERS_TIED,
   LEVEL_MACHINE_DEFAULT,
   PLAYER_START_GAME,
 } from "../../util/Constants";
+
+import { getBodyMobile, getBodyWEB } from "../../helpers/board";
 
 const Board = () => {
   const [amountCards, setAmountCards] = useState(AMOUNT_CARDS_DEFAULT);
@@ -112,43 +111,21 @@ const Board = () => {
 
   const imgEnd = evaluatEndGame(player1.length, player2.length, amountCards);
 
-  const contextPlayer = imgEnd ? (
-    <h1 className="fs-4 bg-danger text-white">
-      {imgEnd.includes("winner")
-        ? PLAYER_WINNER
-        : imgEnd.includes("over")
-        ? MACHINE_WINNER
-        : PLAYERS_TIED}
-    </h1>
-  ) : (
-    <Player
-      number={numPlayer}
-      cards={cards}
-      click={handlePlayerSetCard}
-      disabled={disabled}
-      identifiedCards={identifiedCards}
-      level={level}
-    />
+  const contextPlayer = getBodyMobile(
+    imgEnd,
+    numPlayer,
+    cards,
+    handlePlayerSetCard,
+    disabled,
+    identifiedCards,
+    level
   );
-
-  const contextBody = imgEnd ? (
-    <img src={`/cards/${imgEnd}.gif`} alt="logoEnd" />
-  ) : (
-    cards.map((data) => (
-      <div
-        className="col-3 pe-2 pt-2 d-flex justify-content-center"
-        key={data.position}
-      >
-        <CardInput
-          id={data.id}
-          name={data.name}
-          position={data.position}
-          status={data.status}
-          onChange={handleSetCard}
-          disabled={disabled}
-        />
-      </div>
-    ))
+  const contextBodyWEB = getBodyWEB(
+    imgEnd,
+    amountCards / 4,
+    cards,
+    handleSetCard,
+    disabled
   );
 
   return (
@@ -164,7 +141,7 @@ const Board = () => {
         machine={player2}
       />
       {contextPlayer}
-      <div className="row">{contextBody}</div>
+      {contextBodyWEB}
     </div>
   );
 };

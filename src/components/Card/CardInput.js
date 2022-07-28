@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import { CARD_DOWN, CARD_NAME_BACK } from "../../util/Constants";
 
-const CardInput = ({ onChange, id, name, position, status, disabled }) => {
+const CardInput = ({
+  onChange,
+  id,
+  name,
+  position,
+  status,
+  disabled,
+  width,
+}) => {
   const [card, setCard] = useState(null);
 
   useEffect(() => {
@@ -56,6 +64,7 @@ const CardInput = ({ onChange, id, name, position, status, disabled }) => {
       position={card.position}
       click={handleOnClick}
       status={status}
+      width={width}
     />
   ) : null;
 };
